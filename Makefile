@@ -2,16 +2,16 @@ sqlc:
 	sqlc generate
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/test?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/gobank?sslmode=disable" -verbose up
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/test?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/gobank?sslmode=disable" -verbose down
 
 createdb:
-	sudo docker exec -it postgres15alpl createdb --username=root --owner=root test
+	sudo docker exec -it postgres15alpl createdb --username=root --owner=root gobank
 
 dropdb:
-	sudo docker exec -it postgres15alpl dropdb test
+	sudo docker exec -it postgres15alpl dropdb gobank
 
 migration:
 	migrate create -ext sql -dir  db/migration -seq {theName}
