@@ -10,7 +10,7 @@ import (
 
 const (
 	DBDriver ="postgres"
-	DBSource = "postgresql://root:secret@localhost:5432/gobank?sslmode=disable"
+	DBSource = "postgresql://root:secret@localhost:5432/test?sslmode=disable"
 	serverAddress= "0.0.0.0:8080"
 )
 
