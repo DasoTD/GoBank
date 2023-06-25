@@ -21,7 +21,7 @@ func NewServer(bank *db.Bank) *Server {
 
 	router.POST("/entry", server.createEntry)
 	router.GET("/entry/:id", server.getEntry)
-	router.GET("/entries", server.listEntry)
+	router.GET("/entries/:accountId", server.listEntry)
 
 	server.router = router
 	return server
