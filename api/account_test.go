@@ -1,7 +1,10 @@
 package api
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -43,6 +46,17 @@ func TestGetAccount(t *testing.T) {
 	require.NoError(t, err)
 	server.router.ServeHTTP(recorder, request)
 	fmt.Print("v", recorder.Code)
-	// require.Equal(t, http.StatusOK, recorder.Code)
+	require.Equal(t, http.StatusOK, recorder.Code)
+	requireBodyMatchAccounts(t, recorder.Body, account)
 }
 
+
+func requireBodyMatchAccounts(t *testing.T, body *bytes.Buffer, accounts db.Account) {
+	data, err := ioutil.ReadAll(body)
+	require.NoError(t, err)
+
+	var gotAccounts []db.Account
+	err = json.Unmarshal(data, &gotAccounts)
+	require.NoError(t, err)
+	require.Equal(t, accounts, gotAccounts)
+}
