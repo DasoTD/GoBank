@@ -21,5 +21,7 @@ test:
 server:
 	go run main.go
 
+mockdb:
+	mockgen --build_flags=--mod=mod -package mockdb -destination db/mock/bank.go github.com/dasotd/gobank/db/sqlc Bank
 
-.PHONY: sqlc migrateup createdb dropdb test migration server
+.PHONY: sqlc migrateup createdb dropdb test migration server mockdb
