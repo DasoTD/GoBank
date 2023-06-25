@@ -6,21 +6,30 @@ import (
 	"fmt"
 )
 
-type Bank struct {
+type Bank interface{
+	Querier
+	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
+	// CreateUserTx(ctx context.Context, arg CreateUserTxParams) (CreateUserTxResult, error)
+	// VerifyEmailTx(ctx context.Context, arg VerifyEmailTxParams) (VerifyEmailTxResult, error)
+
+}
+
+// Bank provides all functions to execute SQL queries and transactions
+type SQLBank struct {
 	*Queries
 	db *sql.DB
 	
 }
 
-func NewBank(db *sql.DB) *Bank {
-	return &Bank{
+func NewBank(db *sql.DB) Bank {
+	return &SQLBank{
 		db:      db,
 		Queries: New(db),
 	}
 }
 
 // ExecTx executes a function within a database transaction
-func (bank *Bank) execTx(ctx context.Context, fn func(*Queries) error) error {
+func (bank *SQLBank) execTx(ctx context.Context, fn func(*Queries) error) error {
 	tx, err := bank.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
