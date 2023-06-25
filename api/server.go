@@ -19,6 +19,10 @@ func NewServer(bank *db.Bank) *Server {
 	router.GET("/account/:id", server.getAccount)
 	router.GET("/accounts", server.listAccount)
 
+	router.POST("/entry", server.createEntry)
+	router.GET("/entry/:id", server.getEntry)
+	router.GET("/entries", server.listEntry)
+
 	server.router = router
 	return server
 }
